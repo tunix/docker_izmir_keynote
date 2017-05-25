@@ -1,0 +1,31 @@
+{
+  "name": "dbot",
+  "version": "0.0.1",
+  "description": "Telegram bot for Docker Compose & Swarm Demo",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/tunix/dbot.git"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "docker",
+    "compose",
+    "swarm",
+    "demo"
+  ],
+  "author": "Alper Kanat <me@alperkan.at>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/tunix/dbot/issues"
+  },
+  "homepage": "https://github.com/tunix/dbot#readme",
+  "dependencies": {
+    "telegraf": "^3.6.7",
+    "unirest": "^0.5.1"
+  }
+}
