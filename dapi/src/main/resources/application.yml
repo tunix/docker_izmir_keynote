@@ -1,0 +1,12 @@
+logging:
+    level:
+        org.hibernate.SQL: off
+
+spring:
+    jpa:
+        hibernate:
+            ddl-auto: none
+    datasource:
+        url: jdbc:mysql://${DB_HOST:localhost}/demo?characterEncoding=UTF-8&useSSL=false
+        username: demo
+        password: demo

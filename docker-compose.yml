@@ -11,20 +11,20 @@ services:
     api:
         build: dapi
         image: tunix/dapi
+        links:
+            - db
+        environment:
+            DB_HOST: db
+        command: ["/source/wait-for-it.sh", "db:3306", "--", "java", "-jar", "/app/demo.jar"]
     bot:
         build: dbot
         image: tunix/dbot
         links:
-        #     - db
             - api
         environment:
             BOT_TOKEN: ${BOT_TOKEN}
             VIRTUAL_HOST: ${VIRTUALHOST}
             API_HOST: api
-    # db:
-    #     image: mysql
-    #     environment:
-    #         - MYSQL_ALLOW_EMPTY_PASSWORD=true
-    #         - MYSQL_DATABASE=demo
-    #         - MYSQL_USER=user
-    #         - MYSQL_PASSWORD=test
+    db:
+        build: db
+        image: tunix/db
