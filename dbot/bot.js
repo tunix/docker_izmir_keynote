@@ -4,8 +4,8 @@ const Telegraf = require("telegraf");
 const api = require("./api");
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
-bot.telegram.setWebhook('https://tunix.localtunnel.me/webhook');
-bot.startWebhook('/webhook', null, 3000);
+bot.telegram.setWebhook(`https://${process.env.BOT_HOST}/webhook`);
+bot.startWebhook("/webhook", null, 3000);
 
 function createUser(ctx) {
     return {
