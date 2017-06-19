@@ -1,57 +1,41 @@
 version: "3"
 
 networks:
-    izmir_demo_swarm:
+    demo:
         driver: overlay
 
 services:
-    proxy:
-        image: jwilder/nginx-proxy
-        volumes:
-            - /var/run/docker.sock:/tmp/docker.sock:ro
-        networks:
-            - izmir_demo_swarm
-        ports:
-            - 9999:80
-        deploy:
-            placement:
-                constraints:
-                    - engine.labels.role == proxy
     api:
         image: tunix/docker-izmir-demo-api
         environment:
             DB_HOST: db
         command: ["/source/wait-for-it.sh", "db:3306", "--", "java", "-jar", "/app/demo.jar"]
         networks:
-            - izmir_demo_swarm
+            - demo
         deploy:
+            mode: global
             placement:
                 constraints:
                     - engine.labels.role == node
     bot:
         image: tunix/docker-izmir-demo-bot
         environment:
-            VIRTUAL_HOST: ${VIRTUALHOST}
             BOT_TOKEN: ${BOT_TOKEN}
             BOT_HOST: ${VIRTUALHOST}
             API_HOST: api
         networks:
-            - izmir_demo_swarm
+            - demo
+        ports:
+            - 3000:3000
         deploy:
-            replicas: 2
+            mode: global
             placement:
                 constraints:
                     - engine.labels.role == node
-            update_config:
-                parallelism: 1
-                delay: 10s
-            restart_policy:
-                condition: on-failure
-                max_attempts: 3
     db:
         image: tunix/docker-izmir-demo-db
         networks:
-            - izmir_demo_swarm
+            - demo
         deploy:
             placement:
                 constraints:
