@@ -30,6 +30,8 @@ bot.on("sticker", ctx => {
 bot.command("/start", ctx => {
     let user = createUser(ctx);
 
+    console.log(`Message received: ${JSON.stringify(ctx.from)}`);
+
     api.saveUser(user)
         .then(resp => ctx.reply(`Hi ${user.firstName}! This is: ${os.hostname()}!`))
         .catch(err => ctx.reply("Sorry, error occured! :("));
@@ -42,6 +44,8 @@ bot.command("/hello", ctx => {
 bot.on('text', ctx => {
     let user = createUser(ctx);
     let msgId = ctx.message.message_id;
+
+    console.log(`Message received: ${JSON.stringify(ctx.message)}`);
 
     api.saveUser(user)
         .then(userData => {

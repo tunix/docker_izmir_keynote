@@ -1,8 +1,4 @@
-version: "3"
-
-networks:
-    izmir_demo:
-        driver: bridge
+version: "3.3"
 
 services:
     proxy:
@@ -12,16 +8,12 @@ services:
             - 9999:80
         volumes:
             - /var/run/docker.sock:/tmp/docker.sock:ro
-        networks:
-            - izmir_demo
     api:
         build: dapi
         image: tunix/docker-izmir-demo-api
         environment:
             DB_HOST: db
         command: ["/source/wait-for-it.sh", "db:3306", "--", "java", "-jar", "/app/demo.jar"]
-        networks:
-            - izmir_demo
     bot:
         build: dbot
         image: tunix/docker-izmir-demo-bot
@@ -30,10 +22,6 @@ services:
             BOT_TOKEN: ${BOT_TOKEN}
             BOT_HOST: ${VIRTUALHOST}
             API_HOST: api
-        networks:
-            - izmir_demo
     db:
         build: db
         image: tunix/docker-izmir-demo-db
-        networks:
-            - izmir_demo
